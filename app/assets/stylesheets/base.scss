@@ -1,0 +1,66 @@
+body, h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, hr,
+dl, dd, ol, ul, figure {
+  margin: 0;
+  padding: 0; }
+
+
+  
+body{ 
+	max-width: 100%;
+	overflow-x: hidden;
+	background-color: #fafafa;
+
+ }
+/**
+ * Images
+ */
+img {
+  max-width: 100%;
+  vertical-align: middle; }
+
+/**
+ * Figures
+ */
+figure > img {
+  display: block; }
+
+figcaption {
+  font-size: 14px; }
+
+/**
+ * Lists
+ */
+ul, ol {
+  margin-left: 30px;
+  }
+
+ul{
+list-style-type: none;
+}
+
+ol li, ul li {
+	margin-bottom: 20px;
+}
+
+li > ul,
+li > ol {
+  margin-bottom: 0;
+  
+}
+
+/**
+ * Headings
+ */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400; }
+
+/**
+ * Links
+ */
+a {
+  text-decoration: none; }
+  a:visited{
+  	color: #000;
+  }
+  
