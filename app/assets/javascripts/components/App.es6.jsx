@@ -24,6 +24,7 @@ class App extends React.Component {
 		return(
 			<div>
 				<SiteHeader />
+				<SearchContainer />
 				<BookDisplay
 					library = {this.state.books}
 				 />

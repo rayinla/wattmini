@@ -1,0 +1,55 @@
+
+.pumpkin {
+	background: -moz-linear-gradient(-45deg, rgba(255,175,75,1) 0%, rgba(255,175,75,1) 50%, rgba(255,146,10,1) 100%);
+	background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(255,175,75,1)), color-stop(50%, rgba(255,175,75,1)), color-stop(100%, rgba(255,146,10,1)));
+	background: -webkit-linear-gradient(-45deg, rgba(255,175,75,1) 0%, rgba(255,175,75,1) 50%, rgba(255,146,10,1) 100%);
+	background: -o-linear-gradient(-45deg, rgba(255,175,75,1) 0%, rgba(255,175,75,1) 50%, rgba(255,146,10,1) 100%);
+	background: -ms-linear-gradient(-45deg, rgba(255,175,75,1) 0%, rgba(255,175,75,1) 50%, rgba(255,146,10,1) 100%);
+	background: linear-gradient(135deg, rgba(255,175,75,1) 0%, rgba(255,175,75,1) 50%, rgba(255,146,10,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', endColorstr='#ff920a', GradientType=1 );
+}
+.row-display {
+  display: flex;
+  flex-direction: row;
+}
+
+.floppy-shadow {
+   position: relative;
+}
+.floppy-shadow:before, .floppy-shadow:after
+{
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 15px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  -webkit-box-shadow: 0 15px 10px #777;
+  -moz-box-shadow: 0 15px 10px #777;
+  box-shadow: 0 15px 10px #777;
+  -webkit-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -o-transform: rotate(-3deg);
+  -ms-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+}
+.floppy-shadow:after
+{
+  -webkit-transform: rotate(3deg);
+  -moz-transform: rotate(3deg);
+  -o-transform: rotate(3deg);
+  -ms-transform: rotate(3deg);
+  transform: rotate(3deg);
+  right: 10px;
+  left: auto;
+}
+
+.middle-display {
+    display:flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content:center;
+}
