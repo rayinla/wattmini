@@ -10,6 +10,7 @@ class BookDisplay extends React.Component {
 
 		this.handleClick = this.handleClick.bind(this)
 		this.crossClick = this.crossClick.bind(this)
+		this.genreClick = this.genreClick.bind(this)
 	}
 
 	handleClick(e){
@@ -29,6 +30,13 @@ class BookDisplay extends React.Component {
 	crossClick(e){
 		e.preventDefault()
 		this.setState({toggle: false})
+	}
+
+	genreClick(e){
+      e.preventDefault()
+      var genre = e.target.innerHTML
+      this.props.onGetBooksByGenre(genre)
+
 	}
 
 	render(){
@@ -127,7 +135,32 @@ class BookDisplay extends React.Component {
 			<div>
 
 				{bookModal()}
-				<div className="book-container">		  	
+				<div className="genre-nav">
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">adventure</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">paranormal</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">spiritual</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">action</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">nonfiction</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">shortstory</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">vampire</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">random</button>
+				<button onClick={this.genreClick} className="genre-btn">generalfiction</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">werewolf</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">historicalfiction</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">chicklit</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">classics</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">horror</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">humor</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">fanfiction</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">scifi</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">romance</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">fantasy</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">poetry</button>
+				<button onClick={this.genreClick} ref="genre" className="genre-btn">teenfiction</button>
+				</div>
+				
+				<div className="book-container">
+
 					{books}	
 				</div>
 			</div>

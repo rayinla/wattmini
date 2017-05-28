@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20170524193038) do
     t.integer  "num_parts"
     t.string   "url"
     t.string   "tags",       default: [],              array: true
-    t.integer  "categories", default: [],              array: true
+    t.integer  "category"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
   end

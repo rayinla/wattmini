@@ -5,9 +5,9 @@ class CreateStories < ActiveRecord::Migration[5.0]
       t.string  	:user
       t.string  	:cover
       t.integer 	:num_parts
-      t.string	    :url
+      t.string	  :url
       t.string 		:tags, array: true, default: []
-      t.integer		:categories, array: true, default: []    
+      t.integer		:category    
 
       t.timestamps
     end
