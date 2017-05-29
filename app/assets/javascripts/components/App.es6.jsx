@@ -38,25 +38,36 @@ class App extends React.Component {
 	}
 
 	componentDidMount(){
-	 while(this.state.offset < 1000){
-		$.ajax({
-			url: '/',
+	 
+		var p1 = $.ajax({
+			url: '/pagination',
 			method: 'post',
-			data: {page: {offset: this.state.offset}}	
+			data: {offset: 0}
 		})
-		.done(function(response){		
-			this.setState({ books: response.stories})	
 
+		var p2 = $.ajax({
+			url: '/pagination',
+			method: 'post',
+			data: {offset: 100}
+		})
+
+		Promise.all([p1,p2])
+		.then(function(responses){
+			
+			this.setState({books: responses[0].stories.concat(responses[1].stories) })
 		}.bind(this))
-	 }
+		
+
+	 
 	}
+	
 
 	getBooksByGenre(genre){
 		//Wattpad API currently only accepts int
 		var encryptGenre = this.state.categories[genre]
 
 		$.ajax({
-			url: 'books/library',
+			url: '/library',
 			method: 'post',
 			data: {story: {category: encryptGenre }}
 		})

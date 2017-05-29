@@ -1,8 +1,13 @@
 class BooksController < ApplicationController
 	def index
-		
+			
+
+	end
+
+	def pagination
+			page = Page.new(page_params)
 			uri = URI.parse('https://api.wattpad.com/v4/stories?')
-			params = {:filter => 'hot', :category => '11', :limit => '107'}
+			params = {:filter => 'hot', :category => '11', :limit => '100', :offset => page.offset}
 			uri.query = URI.encode_www_form(params)
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
@@ -18,13 +23,12 @@ class BooksController < ApplicationController
 				puts "no xhr"
 			end	
 	   
-
 	end
 
 	 def library
 	 	    story = Story.new(story_params)
 	 	    uri = URI.parse('https://api.wattpad.com/v4/stories?')
-			params = {:filter => 'hot', :category => story.category.to_s, :limit => '107' }
+			params = {:filter => 'hot', :category => story.category.to_s, :limit => '100' }
 			uri.query = URI.encode_www_form(params)
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
@@ -46,6 +50,10 @@ class BooksController < ApplicationController
 
 	def story_params
 		params.require(:story).permit(:category)
+	end
+
+	def page_params
+		params.permit(:offset)
 	end
 
 end
