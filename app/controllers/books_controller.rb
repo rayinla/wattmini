@@ -4,56 +4,30 @@ class BooksController < ApplicationController
 
 	end
 
-	def pagination
-			page = Page.new(page_params)
-			uri = URI.parse('https://api.wattpad.com/v4/stories?')
-			params = {:filter => 'hot', :category => '11', :limit => '100', :offset => page.offset}
-			uri.query = URI.encode_www_form(params)
-			http = Net::HTTP.new(uri.host, uri.port)
-			http.use_ssl = true
-			http.ca_file = 'C:\RailsInstaller\Ruby2.2.0\lib\ruby\2.2.0\rubygems\ssl_certs\cacert.pem'
-			req = Net::HTTP::Get.new(uri)
-			req.add_field("Authorization", "Basic CACaKO3XYOJlASJMMS06aCpszNx6soN9M9COwMzji6E0")
-			resp = http.request(req)
-			full_resp = resp.body
-			puts full_resp
-			if request.xhr?
-			   render json: full_resp 
-			else
-				puts "no xhr"
-			end	
-	   
+	def library
+	 	story = Story.new(story_params)
+	 	uri = URI.parse('https://api.wattpad.com/v4/stories?')
+		params = {:filter => 'hot', :category => story.category.to_s, :limit => story.limit, :offset => story.offset}
+		uri.query = URI.encode_www_form(params)
+	    http = Net::HTTP.new(uri.host, uri.port)
+		http.use_ssl = true
+		http.ca_file = 'C:\RailsInstaller\Ruby2.2.0\lib\ruby\2.2.0\rubygems\ssl_certs\cacert.pem'
+		req = Net::HTTP::Get.new(uri)
+		req.add_field("Authorization", "Basic CACaKO3XYOJlASJMMS06aCpszNx6soN9M9COwMzji6E0")
+		resp = http.request(req)
+		full_resp = resp.body
+		puts full_resp
+		if request.xhr?
+		  render json: full_resp 
+		else
+		  puts "no xhr"
+			
+		end	
 	end
-
-	 def library
-	 	    story = Story.new(story_params)
-	 	    uri = URI.parse('https://api.wattpad.com/v4/stories?')
-			params = {:filter => 'hot', :category => story.category.to_s, :limit => '100' }
-			uri.query = URI.encode_www_form(params)
-			http = Net::HTTP.new(uri.host, uri.port)
-			http.use_ssl = true
-			http.ca_file = 'C:\RailsInstaller\Ruby2.2.0\lib\ruby\2.2.0\rubygems\ssl_certs\cacert.pem'
-			req = Net::HTTP::Get.new(uri)
-			req.add_field("Authorization", "Basic CACaKO3XYOJlASJMMS06aCpszNx6soN9M9COwMzji6E0")
-			resp = http.request(req)
-			full_resp = resp.body
-			puts full_resp
-			if request.xhr?
-			   render json: full_resp 
-			else
-				puts "no xhr"
-			end	
-
-	 end
 
 	private
 
 	def story_params
-		params.require(:story).permit(:category)
+		params.require(:story).permit(:category, :offset, :limit)
 	end
-
-	def page_params
-		params.permit(:offset)
-	end
-
 end

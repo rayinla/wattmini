@@ -23,8 +23,6 @@ class SearchContainer extends React.Component {
 				<input className="search" onChange={this.handleSearch} type="search" placeholder={this.props.searchTerm}  />
 				<button className="srch-btn"><i className="material-icons srch-ico md-36">&#xE8B6;</i></button>
 				</form>
-
-
 			</div>
 		)
 	}

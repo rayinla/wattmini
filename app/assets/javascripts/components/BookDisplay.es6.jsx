@@ -9,8 +9,26 @@ class BookDisplay extends React.Component {
 		}
 
 		this.handleClick = this.handleClick.bind(this)
+		this.handleScroll = this.handleScroll.bind(this)
 		this.crossClick = this.crossClick.bind(this)
 		this.genreClick = this.genreClick.bind(this)
+	}
+
+	componentDidMount(){
+		if (this.props.onWindowScroll){ 
+			document.addEventListener("scroll", this.handleScroll)
+		}
+	}
+	componentWillMount(){
+		if (this.props.onWindowScroll){ 
+			document.removeEventListener("scroll", this.handleScroll)
+		}
+	}
+
+	handleScroll(e){	
+		 if (this.props.onWindowScroll){
+		 	this.props.onWindowScroll(e)
+		 }
 	}
 
 	handleClick(e){
@@ -134,7 +152,7 @@ class BookDisplay extends React.Component {
 			 	return(
 				 	that.props.library
 					.filter(function(book){
-						return `${book.title} ${book.description}`.
+						return `${book.title} ${book.description} ${book.tags}`.
 						toUpperCase().indexOf(that.props.searchTerm.toUpperCase()) >=0
 					})
 					.map(function(book){			

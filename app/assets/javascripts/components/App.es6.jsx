@@ -7,6 +7,7 @@ class App extends React.Component {
 			searchTerm: "Search for books in",
 			initState: true,
 			offset: 0,
+			currentCat: 3,
 			categories: {
 				"adventure": 11,
 				"paranormal": 12,
@@ -35,44 +36,55 @@ class App extends React.Component {
 
 		this.getBooksByGenre = this.getBooksByGenre.bind(this)
 		this.changeSearchTerm = this.changeSearchTerm.bind(this)
+		this.handleScroll = this.handleScroll.bind(this)
 	}
 
-	componentDidMount(){
-	 
+	componentDidMount(){ 
 		var p1 = $.ajax({
-			url: '/pagination',
+			url: '/library',
 			method: 'post',
-			data: {offset: 0}
+			data: {story: {category: this.state.currentCat, offset: 0, limit: 100}}
 		})
-
-		var p2 = $.ajax({
-			url: '/pagination',
-			method: 'post',
-			data: {offset: 100}
-		})
-
-		Promise.all([p1,p2])
-		.then(function(responses){
-			
-			this.setState({books: responses[0].stories.concat(responses[1].stories) })
+		.done(function(response){
+			this.setState({books: response.stories})
+			this.setState({offset: this.state.offset + 100})
 		}.bind(this))
-		
-
-	 
 	}
+	
+	//Detect bottom of doc and load more books
+	handleScroll(e){
+		if (document.body.scrollHeight == 
+	        document.body.scrollTop +        
+	        window.innerHeight) {
+				//ease the amount of books loaded
+		        this.setState({offset: this.state.offset + (this.state.offset / 4)})
+		    	$.ajax({
+					url: '/library',
+					method: 'post',
+					data: {story: {category: this.state.currentCat, offset: this.state.offset, limit: 25 }}
+			    })
+		    	.done(function(response){
+		    		this.setState({books: this.state.books.concat(response.stories)})
+		    	}.bind(this))	    	
+	     }
+	 }
 	
 
 	getBooksByGenre(genre){
-		//Wattpad API currently only accepts int
-		var encryptGenre = this.state.categories[genre]
+		//Convert genre to int representation
 
+		var encryptGenre = this.state.categories[genre]
+		//we want the genre to be accesible to scroll handler
+		this.setState({currentCat: encryptGenre})
+		this.setState({offset: 100})
 		$.ajax({
 			url: '/library',
 			method: 'post',
-			data: {story: {category: encryptGenre }}
+			data: {story: {category: encryptGenre, offset: 0, limit: 100}}
 		})
 		.done(function(response){
 			this.setState({books:response.stories})
+			// this.setState({offset: this.state.offset + 100})
 		}.bind(this))
 	}
 
@@ -91,6 +103,7 @@ class App extends React.Component {
 
 				 />
 				<BookDisplay
+					onWindowScroll    = {this.handleScroll}
 				    searchTerm        = {this.state.searchTerm}
 					library           = {this.state.books}
 					onGetBooksByGenre = {this.getBooksByGenre}
