@@ -40,7 +40,8 @@ class BookDisplay extends React.Component {
 	}
 
 	render(){
-		that = this
+		var that = this
+		//Book Modal on and off state
 		function bookModal(){	
 			if(that.state.toggle){
 				return(
@@ -48,8 +49,7 @@ class BookDisplay extends React.Component {
 					<div className="book-modal middle-display">
 						<div className="modal-head">
 						<i onClick={that.crossClick} className="material-icons cross md-36">&#xE5CD;</i>
-						<h2 className="book-title"> {that.state.book.title} </h2>
-						
+						<h2 className="book-title"> {that.state.book.title} </h2>						
 						<p className="byline"> by {that.state.book.user}</p>
 						<p className="book-attrs middle-display">
 						<span><i className="material-icons md-18">&#xE896;</i>{that.state.book.numParts} </span>
@@ -116,52 +116,68 @@ class BookDisplay extends React.Component {
 			}
 		}
 
-
-
-		var books = (
-			this.props.library.map(function(book){
+		//Sets books before subjecting them to search filtering
+		function bookFilter(){		
+			if(that.props.initState){
 				return(
-					
-					  <div key={book.id} onClick={that.handleClick} className="book">
-					    <img data-index-number={book.id} src={book.cover} />
-					  </div>
-					
+					that.props.library
+					.map(function(book){
+						return(						
+							  <div key={book.id} onClick={that.handleClick} className="book">
+							    <img data-index-number={book.id} src={book.cover} />
+							  </div>						
+						)	
+				    })
+			    )
+			 }
+			 else{
+			 	return(
+				 	that.props.library
+					.filter(function(book){
+						return `${book.title} ${book.description}`.
+						toUpperCase().indexOf(that.props.searchTerm.toUpperCase()) >=0
+					})
+					.map(function(book){			
+						return(			
+							  <div key={book.id} onClick={that.handleClick} className="book">
+							    <img data-index-number={book.id} src={book.cover} />
+							  </div>					
+						)				
+					})
 				)
-				
-			})
-
-		)
+			 }
+		  }
+		   
+		
 		return(
+			//TODO: Componentize bookModal, genreNav, books
 			<div>
-
 				{bookModal()}
 				<div className="genre-nav">
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">adventure</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">paranormal</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">spiritual</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">action</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">nonfiction</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">shortstory</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">vampire</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">random</button>
-				<button onClick={this.genreClick} className="genre-btn">generalfiction</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">werewolf</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">historicalfiction</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">chicklit</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">classics</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">horror</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">humor</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">fanfiction</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">scifi</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">romance</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">fantasy</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">poetry</button>
-				<button onClick={this.genreClick} ref="genre" className="genre-btn">teenfiction</button>
-				</div>
-				
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">adventure</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">paranormal</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">spiritual</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">action</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">nonfiction</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">shortstory</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">vampire</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">random</button>
+					<button onClick={this.genreClick} className="genre-btn">generalfiction</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">werewolf</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">historicalfiction</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">chicklit</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">classics</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">horror</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">humor</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">fanfiction</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">scifi</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">romance</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">fantasy</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">poetry</button>
+					<button onClick={this.genreClick} ref="genre" className="genre-btn">teenfiction</button>
+				</div>			
 				<div className="book-container">
-
-					{books}	
+					{bookFilter()}	
 				</div>
 			</div>
 

@@ -2,7 +2,7 @@ class BooksController < ApplicationController
 	def index
 		
 			uri = URI.parse('https://api.wattpad.com/v4/stories?')
-			params = {:filter => 'hot', :category => '11', :limit => '50' }
+			params = {:filter => 'hot', :category => '11', :limit => '107'}
 			uri.query = URI.encode_www_form(params)
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
@@ -24,7 +24,7 @@ class BooksController < ApplicationController
 	 def library
 	 	    story = Story.new(story_params)
 	 	    uri = URI.parse('https://api.wattpad.com/v4/stories?')
-			params = {:filter => 'hot', :category => story.category.to_s, :limit => '50' }
+			params = {:filter => 'hot', :category => story.category.to_s, :limit => '107' }
 			uri.query = URI.encode_www_form(params)
 			http = Net::HTTP.new(uri.host, uri.port)
 			http.use_ssl = true
