@@ -5,7 +5,7 @@ class BookDisplay extends React.Component {
 
 		this.state = {
 			toggle: false,
-			book: {}
+			book: {}			
 		}
 
 		this.handleClick = this.handleClick.bind(this)
@@ -54,16 +54,44 @@ class BookDisplay extends React.Component {
       e.preventDefault()
       var genre = e.target.innerHTML
       this.props.onGetBooksByGenre(genre)
-
 	}
 
 	render(){
 		var that = this
-		//Book Modal on and off state
+		//Book Modal on and off state   
 		function bookModal(){	
 			if(that.state.toggle){
 				return(
-					<div className="blackout"> 
+					<div className="blackout">
+					<h2 className="kiosk-cta">Hottest Reads In {that.props.friendlyCat.toUpperCase()} Just For You</h2> 
+					<div className="kiosk"> 
+					<div className="book-suggestions">
+						{   //Filter based on most read books
+							that.props.library   
+		                    .filter(function(book,idx){
+			   	              if(book.readCount	> 10000000 
+			   	              	&& that.props.friendlyCat === "teenficton" 
+			   	              	|| that.props.friendlyCat === "romance"){
+			   	              	return book
+			   	              }else if(book.readCount > 100000
+			   	              			&& that.props.friendlyCat != "teenficton"
+			   	              			&& that.props.friendlyCat != "romance"){
+
+			   	              	return book
+			   	              }	   
+
+			                })
+		                    .map(function(book, idx){	
+		    					return(
+			    					<div key={book.id} onClick={that.handleClick} className="curated-book">
+						 				 <img className="stock-book" src="/assets/flat-book2.jpg" />
+						  				<img className="book-jacket" data-index-number={book.id} src={book.cover} />
+									</div>
+								)	
+		   				   })
+						}
+					</div>
+					</div>
 					<div className="book-modal middle-display">
 						<div className="modal-head">
 						<i onClick={that.crossClick} className="material-icons cross md-36">&#xE5CD;</i>
@@ -142,7 +170,8 @@ class BookDisplay extends React.Component {
 					.map(function(book){
 						return(						
 							  <div key={book.id} onClick={that.handleClick} className="book">
-							    <img data-index-number={book.id} src={book.cover} />
+							  	<span><img className="sm-stock-book" src="/assets/small-book.jpg" /></span>
+							    <span><img className="sm-jacket" data-index-number={book.id} src={book.cover} /></span>
 							  </div>						
 						)	
 				    })

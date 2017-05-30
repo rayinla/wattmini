@@ -8,6 +8,7 @@ class App extends React.Component {
 			initState: true,
 			offset: 0,
 			currentCat: 3,
+			friendlyCat: "fantasy",
 			categories: {
 				"adventure": 11,
 				"paranormal": 12,
@@ -72,7 +73,7 @@ class App extends React.Component {
 
 	getBooksByGenre(genre){
 		//Convert genre to int representation
-
+		this.setState({friendlyCat: genre})
 		var encryptGenre = this.state.categories[genre]
 		//we want the genre to be accesible to scroll handler
 		this.setState({currentCat: encryptGenre})
@@ -100,6 +101,7 @@ class App extends React.Component {
 				<SearchContainer 
 				  searchTerm         = {this.state.searchTerm}
 				  onChangeSearchTerm = {this.changeSearchTerm}
+				  friendlyCat	     = {this.state.friendlyCat}
 
 				 />
 				<BookDisplay
@@ -108,6 +110,7 @@ class App extends React.Component {
 					library           = {this.state.books}
 					onGetBooksByGenre = {this.getBooksByGenre}
 					initState		  = {this.state.initState}
+					friendlyCat		  = {this.state.friendlyCat}
 				 />
 			 </div>
 
