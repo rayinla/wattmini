@@ -221,8 +221,9 @@ class BookDisplay extends React.Component {
 					.map(function(book){			
 						return(			
 							  <div key={book.id} onClick={that.handleClick} className="book">
-							    <img data-index-number={book.id} src={book.cover} />
-							  </div>					
+							  	<span><img className="sm-stock-book" src="/assets/small-book.jpg" /></span>
+							    <span><img className="sm-jacket" data-index-number={book.id} src={book.cover} /></span>
+							  </div>							
 						)				
 					})
 				)

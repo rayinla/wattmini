@@ -112,7 +112,8 @@ class App extends React.Component {
 					initState		  = {this.state.initState}
 					friendlyCat		  = {this.state.friendlyCat}
 				 />
-			 </div>
+				 <SiteFooter />
+			</div>
 
 		)	
 	}
