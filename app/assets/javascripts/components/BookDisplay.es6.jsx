@@ -60,7 +60,6 @@ class BookDisplay extends React.Component {
 			return book.id === Number(e.target.getAttribute("data-index-number"))		
     	}
 		var activeBook = this.props.library.find(findById)
-
 		this.setState({toggle: true})
 		this.setState({book: activeBook})
 	}
@@ -89,17 +88,17 @@ class BookDisplay extends React.Component {
 						{   //Filter based on most read books
 							that.props.library   
 		                    .filter(function(book,idx){
-
 			   	              if(book.readCount	> 100000 ){
 			   	              	return book
 			   	              }  
-
 			                })
 		                    .map(function(book, idx){	
 		    					return(
 			    					<div key={book.id} onClick={that.handleClick} className="curated-book">
-						 				 <img className="stock-book" src="/assets/flat-book2.jpg" />
+			    						
+						 				<img className="stock-book" src="/assets/flat-book2.jpg" />
 						  				<img className="book-jacket" data-index-number={book.id} src={book.cover} />
+						  			
 									</div>
 								)	
 		   				   })
@@ -142,7 +141,6 @@ class BookDisplay extends React.Component {
 			}
 			else{
 				return(
-
 					<div className="book-modal inactive-modal middle-display">
 						<div className="modal-head">
 						<h2 className="book-title"> {that.state.book.title} </h2>
@@ -182,10 +180,11 @@ class BookDisplay extends React.Component {
 				return(
 					that.props.library
 					.map(function(book){
-						return(						
+						return(	/*The data-index-number is required for click event to function*/					
 							  <div key={book.id} onClick={that.handleClick}  onMouseUp={that.handleDrop} data-index-number={book.id} className="book ui-draggable ui-draggable-handle">
-							  	<img className="sm-stock-book" src="/assets/small-book.jpg" />
-							    <img className="sm-jacket" data-index-number={book.id} src={book.cover} />
+							  	<img className="sm-stock-book" src="/assets/small-book.jpg" />					  	
+							    <img className="sm-jacket" data-index-number={book.id} src={book.cover} />						 
+							    <div className="lib-check" data-index-number={book.id}><i className="material-icons check">&#xE876;</i></div>
 							  </div>						
 						)	
 				    })
@@ -200,9 +199,10 @@ class BookDisplay extends React.Component {
 					})
 					.map(function(book){			
 						return(			
-							  <div key={book.id} onClick={that.handleClick} className="book">
-							  	<img className="sm-stock-book" src="/assets/small-book.jpg" />
-							    <img className="sm-jacket" data-index-number={book.id} src={book.cover} />
+							   <div key={book.id} onClick={that.handleClick}  onMouseUp={that.handleDrop} data-index-number={book.id} className="book ui-draggable ui-draggable-handle">
+							  	<img className="sm-stock-book" src="/assets/small-book.jpg" />					  	
+							    <img className="sm-jacket" data-index-number={book.id} src={book.cover} />						 
+							    <div className="lib-check" data-index-number={book.id}><i className="material-icons check">&#xE876;</i></div>
 							  </div>							
 						)				
 					})

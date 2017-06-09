@@ -8,7 +8,7 @@ body{
 	max-width: 100%;
 	background-image: url('book-shelf4.jpg');
 	overflow-x: hidden;
-  scrollbar-base-color:  rgba(255, 175, 75, 1);
+  scrollbar-base-color:  rgba(67,67,67,0.6);
   scrollbar-3dlight-color:  rgba(255,175,75,0.3);
   scrollbar-highlight-color:  rgba(255,175,75,0.3);
   scrollbar-track-color:  #f0f0f0;
@@ -20,23 +20,15 @@ body::-webkit-scrollbar-track {
   background-color: transparent ;
 }
 body::-webkit-scrollbar {
-  width: 2px;
+  width: 6px;
   background-color: transparent;
-  border-radius: 20px;
-  -webkit-box-shadow: inset 0px 7px 50px -9px rgba(0,0,0,0.5);
-  -moz-box-shadow: inset 0px 7px 50px -9px rgba(0,0,0,0.5);
-  box-shadow: inset 0px 7px 50px -9px rgba(0,0,0,0.5);  
+  -webkit-box-shadow: inset 0px 7px 50px -9px rgba(0,0,0,0.4);
+  -moz-box-shadow: inset 0px 7px 50px -9px rgba(0,0,0,0.4);
+  box-shadow: inset 0px 7px 50px -9px rgba(0,0,0,0.4);  
 }
 body::-webkit-scrollbar-thumb {
   border-radius: 20px;
-  background: rgba(255,175,75,1);
-  background: -moz-radial-gradient(center, ellipse cover, rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%);
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255,175,75,1)), color-stop(100%, rgba(255,146,10,1)));
-  background: -webkit-radial-gradient(center, ellipse cover, rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%);
-  background: -o-radial-gradient(center, ellipse cover, rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%);
-  background: -ms-radial-gradient(center, ellipse cover, rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%);
-  background: radial-gradient(ellipse at center, rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', endColorstr='#ff920a', GradientType=1 );
+  background-color: rgba(67,67,67,0.6);
 }
 /**
  * Images

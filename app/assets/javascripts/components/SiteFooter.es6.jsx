@@ -56,7 +56,7 @@ class SiteFooter extends React.Component {
 				<div className="book-slots" >
 					<div className="book-slot">
 						<div className="add">
-							<p>Add Book to My Library</p> 
+							<p>Drop Book in My Library</p> 
 							<i className="material-icons md-48 get-app ">&#xE884;</i>
 						</div>
 						<div className="added">

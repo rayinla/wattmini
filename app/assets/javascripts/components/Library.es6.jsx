@@ -25,19 +25,15 @@ class Library extends React.Component {
 				return newTitle + "..."
 			}else {
 				return title
-			}
-
-			
+			}	
 		}
 
 		function books(){	
 			if(that.props.userLibrary === 0 ){
-			  		return(
-			  				<p>No Books in My Library</p>
-			  			)
-			 }else{
-
-			  			
+			  	return(
+			  		<p>No Books in My Library</p>
+			  	)
+			 }else{		  			
 			  		that.props.userLibrary	
 					.map(function(book){
 						return(
@@ -47,13 +43,10 @@ class Library extends React.Component {
 							</div>
 						)
 				   })
-
 				}
-
 		}
 
 		return(
-
 			<div className="library">
 			  <div className="lib-modalhead">
 			  	{bookLength()}
@@ -72,10 +65,6 @@ class Library extends React.Component {
 				}
 			  </div>
 			</div>
-
-
 		)
 	}
-
-
 }

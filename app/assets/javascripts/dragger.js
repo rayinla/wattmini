@@ -2,7 +2,7 @@
 
 
     var currentBook = ""
-	
+	var addedBook = ""
 	function mountDragDrop(){
 		$(".book").draggable({
 		 	scroll: false,
@@ -12,6 +12,11 @@
 		  	drag: onDrag,
 		  	stop: onDragStop
 		 })
+		//Disables draggability for book already in library
+		if(currentBook.length > 1){
+			addedBook.draggable("destroy")
+			setTimeout(function(){addedBook.children(".lib-check").show()},1000)
+		}
 
 		$(".book-slots").droppable({
 		  	accept: ".book",
@@ -36,6 +41,8 @@
 
 	  function onDrop(e, ui){
 	  	currentBook = ui.draggable.attr("data-index-number")
+	  	addedBook = ui.draggable
+
 	  	$(".add").hide()
 	  	$(".added").show()
 	  	setTimeout(function(){$(".book-slots").hide()}, 2500)
