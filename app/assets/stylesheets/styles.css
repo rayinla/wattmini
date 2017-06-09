@@ -103,7 +103,9 @@
   position: relative;
   color: #fdfdfd;
 }
-
+.show {
+  display: block;
+}
 /* BookModal */
 .kiosk {
   position: relative;
@@ -499,6 +501,7 @@
   }
 }
 
+/*ie 8 and higher */
 @media screen and (min-width:0\0) {
   .sm-jacket {
     height: 234.38px;
@@ -519,6 +522,9 @@
     height: 400px;
     overflow-y: hidden;
   }
+  .thumb-up {
+     color: #05c402;
+  }
 }
 
 /* ie > 10 selector hack*/
@@ -534,9 +540,6 @@ _:-ms-input-placeholder, :root .book-suggestions {
 }
 _:-ms-input-placeholder, :root .lib-body {
    width: 578px;
-}
-_:-ms-input-placeholder, :root .thumb-up {
-   color: #05c402;
 }
 _:-ms-input-placeholder, :root .sm-jacket {
   margin-top: -253.38px;

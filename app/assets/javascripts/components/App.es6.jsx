@@ -64,7 +64,7 @@ class App extends React.Component {
 	
 	//Initialize draggabale and droppable elements
 	componentDidUpdate(){
-		mountDragDrop()
+		initLibraryUI()
 	}
 
 	findPollyfill(){

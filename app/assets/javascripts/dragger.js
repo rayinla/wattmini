@@ -2,8 +2,9 @@
 
 
     var currentBook = ""
-	var addedBook = ""
-	function mountDragDrop(){
+	var addedBooks = []
+
+	function initLibraryUI(){
 		$(".book").draggable({
 		 	scroll: false,
 		  	revert: true, 
@@ -12,18 +13,33 @@
 		  	drag: onDrag,
 		  	stop: onDragStop
 		 })
-		//Disables draggability for book already in library
-		if(currentBook.length > 1){
-			addedBook.draggable("destroy")
-			setTimeout(function(){addedBook.children(".lib-check").show()},1000)
-		}
-
+		
 		$(".book-slots").droppable({
 		  	accept: ".book",
 		  	tolerance: "intersect",
-		  	drop: onDrop
-	  }) 	
+		  	drop: onDrop	  	
+	  })
+	  	initLibraryBooks() 	
 	}
+
+	function initLibraryBooks(){
+	  	if(currentBook.length > 1){
+			$('.book[data-index-number="' + currentBook + '"]').draggable("destroy")
+			$('.book[data-index-number="' + currentBook + '"]').children(".lib-check").show()
+			if(addedBooks.includes(currentBook) === false){
+				addedBooks.push(currentBook)
+			}		
+		}
+		mapLibCheck()
+	  }
+
+	  function mapLibCheck(){
+	  	if(addedBooks.length > 0){
+	  		addedBooks.map(function(book){
+	  		  $('.book[data-index-number="' + book + '"]').children(".lib-check").show()
+		   })	
+	  	}
+	  }
 
 
 	  function onDragStop(){
@@ -35,14 +51,12 @@
 	  	currentBook = ""
 	  	$(".book-slots").show()
 	  	$(".add").show()
-	  	$(".added").hide()
-	   	
+	  	$(".added").hide()   	
 	  }	
 
 	  function onDrop(e, ui){
 	  	currentBook = ui.draggable.attr("data-index-number")
-	  	addedBook = ui.draggable
-
+	
 	  	$(".add").hide()
 	  	$(".added").show()
 	  	setTimeout(function(){$(".book-slots").hide()}, 2500)
