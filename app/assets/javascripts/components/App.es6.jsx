@@ -1,12 +1,18 @@
-class App extends React.Component {
+var imported = document.createElement('script');
+imported.src = '/assets/dragger.js';
+document.head.appendChild(imported);
 
+
+class App extends React.Component {
 	constructor(){
 		super()
 		this.state = {
 			books: [], 
+			userLibrary: [],
 			searchTerm: "Search for books in",
 			initState: true,
 			offset: 0,
+			droppedBook: "",
 			currentCat: 3,
 			friendlyCat: "fantasy",
 			categories: {
@@ -36,12 +42,14 @@ class App extends React.Component {
 		}
 
 		this.getBooksByGenre = this.getBooksByGenre.bind(this)
+		this.getDroppedBook = this.getDroppedBook.bind(this)
 		this.changeSearchTerm = this.changeSearchTerm.bind(this)
 		this.handleScroll = this.handleScroll.bind(this)
+		this.findPollyfill = this.findPollyfill.bind(this)
 	}
 
 	componentDidMount(){ 
-		var p1 = $.ajax({
+		$.ajax({
 			url: '/library',
 			method: 'post',
 			data: {story: {category: this.state.currentCat, offset: 0, limit: 100}}
@@ -52,6 +60,65 @@ class App extends React.Component {
 		}.bind(this))
 	}
 	
+	//Initialize draggabale and droppable elements
+	componentDidUpdate(){
+		mountDragDrop()
+	}
+
+	findPollyfill(){
+		if (!Array.prototype.find) {
+		  		   Object.defineProperty(Array.prototype, 'find', {
+		    	   value: function(predicate) {
+		     // 1. Let O be ? ToObject(this value).
+		     		 if (this == null) {
+		       				 throw new TypeError('"this" is null or not defined');
+		      		 }
+		            var o = Object(this);
+		      // 2. Let len be ? ToLength(? Get(O, "length")).
+		            var len = o.length >>> 0;
+		      // 3. If IsCallable(predicate) is false, throw a TypeError exception.
+		            if (typeof predicate !== 'function') {
+		        		throw new TypeError('predicate must be a function');
+		            }
+		      // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
+		      		var thisArg = arguments[1];
+		      // 5. Let k be 0.
+		     		 var k = 0;
+		      // 6. Repeat, while k < len
+		      		while (k < len) {
+		        // a. Let Pk be ! ToString(k).
+		        // b. Let kValue be ? Get(O, Pk).
+		        // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
+		        // d. If testResult is true, return kValue.
+		       		   var kValue = o[k];
+		       		    if (predicate.call(thisArg, kValue, k, o)) {
+		         		 return kValue;	        		
+		        	   }
+		        // e. Increase k by 1.
+		        	  k++;
+		      	    }
+		      // 7. Return undefined.
+		         return undefined;
+		        }
+		    })
+		}
+	}	
+
+
+	getDroppedBook(droppedBook){
+		if(droppedBook != ""){
+			this.findPollyfill()
+			function findById(book){  
+				return book.id === Number(droppedBook)		
+	    	}
+			var book = this.state.books.find(findById)
+			
+			this.setState({userLibrary: this.state.userLibrary.concat([book])})
+			
+		}
+		
+	}
+
 	//Detect bottom of doc and load more books
 	handleScroll(e){
 		if (document.body.scrollHeight == 
@@ -109,10 +176,17 @@ class App extends React.Component {
 				    searchTerm        = {this.state.searchTerm}
 					library           = {this.state.books}
 					onGetBooksByGenre = {this.getBooksByGenre}
+					onGetDroppedBook  = {this.getDroppedBook}
 					initState		  = {this.state.initState}
 					friendlyCat		  = {this.state.friendlyCat}
+					findPollyfill     = {this.findPollyfill}
+					findById  		  = {this.findById}
 				 />
-				 <SiteFooter />
+				 <SiteFooter 
+				 	library 		 = {this.state.books}			 
+				 	droppedBook 	 = {this.state.droppedBook}
+				 	userLibrary		 = {this.state.userLibrary}
+ 				 />
 			</div>
 
 		)	

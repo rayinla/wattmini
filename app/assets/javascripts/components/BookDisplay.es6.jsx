@@ -1,42 +1,8 @@
-	
-function findPollyfill(){
-	if (!Array.prototype.find) {
-	  		   Object.defineProperty(Array.prototype, 'find', {
-	    	   value: function(predicate) {
-	     // 1. Let O be ? ToObject(this value).
-	     		 if (this == null) {
-	       				 throw new TypeError('"this" is null or not defined');
-	      		 }
-	            var o = Object(this);
-	      // 2. Let len be ? ToLength(? Get(O, "length")).
-	            var len = o.length >>> 0;
-	      // 3. If IsCallable(predicate) is false, throw a TypeError exception.
-	            if (typeof predicate !== 'function') {
-	        		throw new TypeError('predicate must be a function');
-	            }
-	      // 4. If thisArg was supplied, let T be thisArg; else let T be undefined.
-	      		var thisArg = arguments[1];
-	      // 5. Let k be 0.
-	     		 var k = 0;
-	      // 6. Repeat, while k < len
-	      		while (k < len) {
-	        // a. Let Pk be ! ToString(k).
-	        // b. Let kValue be ? Get(O, Pk).
-	        // c. Let testResult be ToBoolean(? Call(predicate, T, « kValue, k, O »)).
-	        // d. If testResult is true, return kValue.
-	       		   var kValue = o[k];
-	       		    if (predicate.call(thisArg, kValue, k, o)) {
-	         		 return kValue;	        		
-	        	   }
-	        // e. Increase k by 1.
-	        	  k++;
-	      	    }
-	      // 7. Return undefined.
-	         return undefined;
-	        }
-	    })
-	}
-}
+
+var imported = document.createElement('script');
+imported.src = '/assets/dragger.js';
+document.head.appendChild(imported);
+
 
 
 class BookDisplay extends React.Component {
@@ -45,6 +11,7 @@ class BookDisplay extends React.Component {
 
 		this.state = {
 			toggle: false,
+			droppedBook: "",
 			book: {}			
 		}
 
@@ -52,6 +19,9 @@ class BookDisplay extends React.Component {
 		this.handleScroll = this.handleScroll.bind(this)
 		this.crossClick = this.crossClick.bind(this)
 		this.genreClick = this.genreClick.bind(this)
+		this.handleDrag = this.handleDrag.bind(this)
+		this.handleDrop =this.handleDrop.bind(this)
+
 	}
 
 	componentDidMount(){
@@ -65,22 +35,32 @@ class BookDisplay extends React.Component {
 		}
 	}
 
+
+	handleDrag(e){
+		e.preventDefault()
+		console.log(e.target.dataset.indexNumber)
+	}
+
+	handleDrop(e){
+		e.preventDefault()
+		this.props.onGetDroppedBook(currentBook)	 
+	}
+
 	handleScroll(e){	
-		 if (this.props.onWindowScroll){
-		 	this.props.onWindowScroll(e)
-		 }
+		if (this.props.onWindowScroll){
+			this.props.onWindowScroll(e)
+		}
 	}
 
 	handleClick(e){
 		e.preventDefault()	
 		that = this
-		findPollyfill()
+		this.props.findPollyfill()
 		function findById(book){  
-		  return book.id === Number(e.target.dataset.indexNumber)
-		}
-
+			return book.id === Number(e.target.getAttribute("data-index-number"))		
+    	}
 		var activeBook = this.props.library.find(findById)
-			
+
 		this.setState({toggle: true})
 		this.setState({book: activeBook})
 	}
@@ -203,9 +183,9 @@ class BookDisplay extends React.Component {
 					that.props.library
 					.map(function(book){
 						return(						
-							  <div key={book.id} onClick={that.handleClick} className="book">
-							  	<span><img className="sm-stock-book" src="/assets/small-book.jpg" /></span>
-							    <span><img className="sm-jacket" data-index-number={book.id} src={book.cover} /></span>
+							  <div key={book.id} onClick={that.handleClick}  onMouseUp={that.handleDrop} data-index-number={book.id} className="book ui-draggable ui-draggable-handle">
+							  	<img className="sm-stock-book" src="/assets/small-book.jpg" />
+							    <img className="sm-jacket" data-index-number={book.id} src={book.cover} />
 							  </div>						
 						)	
 				    })
@@ -221,8 +201,8 @@ class BookDisplay extends React.Component {
 					.map(function(book){			
 						return(			
 							  <div key={book.id} onClick={that.handleClick} className="book">
-							  	<span><img className="sm-stock-book" src="/assets/small-book.jpg" /></span>
-							    <span><img className="sm-jacket" data-index-number={book.id} src={book.cover} /></span>
+							  	<img className="sm-stock-book" src="/assets/small-book.jpg" />
+							    <img className="sm-jacket" data-index-number={book.id} src={book.cover} />
 							  </div>							
 						)				
 					})
