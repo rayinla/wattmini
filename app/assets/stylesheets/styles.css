@@ -201,6 +201,7 @@
 }
 .modal-head {
   padding-left: 10px;
+  height: 158px;
   border-bottom: 1px solid rgba(0,0,0,0.4);
   -webkit-box-shadow: -1px 3px 3px -2px rgba(0,0,0,0.2);
  -moz-box-shadow: -1px 3px 3px -2px rgba(0,0,0,0.2);
@@ -246,6 +247,7 @@
 .info-title {
   font-weight: bold;
   margin-bottom: 10px;
+  text-align: center;
 }
 .m-content {
 	margin-bottom: 8px;
@@ -264,6 +266,40 @@
 .byline {
   padding-left: 20px;
 }
+.book-ui:after{
+  content: "";
+  clear: both;
+  display: table;
+}
+.read-cta {
+  color: #fdfdfd;
+  border: 1px solid rgba(0,0,0,0.3);
+  border-radius: 2px;
+  position: relative;
+  top: 180px;
+  left: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background: #ffe8d1; /* Old browsers */
+  background: -moz-linear-gradient(45deg, #ffe8d1 0%, #ffa73d 6%, #efa332 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(45deg, #ffe8d1 0%,#ffa73d 6%,#efa332 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(45deg, #ffe8d1 0%,#ffa73d 6%,#efa332 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffe8d1', endColorstr='#efa332',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+.read-cta:visited {
+  color: #fdfdfd;
+}
+.book-info {
+  margin-top: 30px;
+}
+.m-content {
+  line-height: 30px;
+  padding-left: 10px;
+  padding-right: 10px
+}
+
+/* Icons */
+
 .material-icons { 
 	padding-top: 5px;
 }

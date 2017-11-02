@@ -3,7 +3,7 @@
 
     var currentBook = ""
 	var addedBooks = []
-
+	//Starts JQuery UI functionality
 	function initLibraryUI(){
 		$(".book").draggable({
 		 	scroll: false,
@@ -21,7 +21,7 @@
 	  })
 	  	initLibraryBooks() 	
 	}
-
+	//cancels drag and shows added books
 	function initLibraryBooks(){
 	  	if(currentBook.length > 1){
 			$('.book[data-index-number="' + currentBook + '"]').draggable("destroy")
@@ -32,7 +32,7 @@
 		}
 		mapLibCheck()
 	  }
-
+	  //Adds show style to books in user's library
 	  function mapLibCheck(){
 	  	if(addedBooks.length > 0){
 	  		addedBooks.map(function(book){
@@ -40,7 +40,6 @@
 		   })	
 	  	}
 	  }
-
 
 	  function onDragStop(){
 	  	$(".book-slots").hide()
@@ -56,11 +55,9 @@
 
 	  function onDrop(e, ui){
 	  	currentBook = ui.draggable.attr("data-index-number")
-	
 	  	$(".add").hide()
 	  	$(".added").show()
 	  	setTimeout(function(){$(".book-slots").hide()}, 2500)
-
 	  } 	
 
 

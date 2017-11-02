@@ -77,6 +77,27 @@ class BookDisplay extends React.Component {
 
 	render(){
 		var that = this
+		function clrNum(str){
+			str = str.toString().split("").reverse().join("")
+			var numArr = []
+			var start = 0
+			var end = 3
+			while (end <= str.length){
+			  numArr.push(str.slice(start, end).split("").reverse().join(""))
+			  if(end == str.length - 1) {
+			    start = end
+			    end += 1 
+			  }else if(end + 1 == str.length - 1) {
+			    start = end
+			    end += 2
+			  }else {
+			    start = end
+			    end += 3
+			  }
+			}
+			clrdNum = numArr.reverse().join(",")
+			return clrdNum
+		}
 		//Book Modal on and off state   
 		function bookModal(){	
 			if(that.state.toggle){
@@ -109,26 +130,27 @@ class BookDisplay extends React.Component {
 						<div className="modal-head">
 						<i onClick={that.crossClick} className="material-icons cross md-36">&#xE5CD;</i>
 						<h2 className="book-title"> {that.state.book.title} </h2>						
-						<p className="byline"> by {that.state.book.user}</p>
-						<p className="book-attrs middle-display">
-						<span><i className="material-icons md-18">&#xE896;</i>{that.state.book.numParts} </span>
-						<span><i className="material-icons md-18">remove_red_eye</i> {that.state.book.readCount} </span>
-						<span><i className="material-icons md-18">&#xE885;</i>{that.state.book.voteCount} </span>
-						<span><i className="material-icons md-18">&#xE0B9;</i>{that.state.book.commentCount} </span>
-						</p>
+						<p className="byline"> by {that.state.book.user}</p>	
 						</div>
 						<div className="modal-body">
-						  <section className="col-1-2">
-						  	<img src={that.state.book.cover} />
+						  <section className="book-ui">
+						  	<div className="col-1-2">
+						  	  <img className="modal-jacket" src={that.state.book.cover} />
+						  	</div>
+						  	<div className="col-1-2">
+							  	<a className="read-cta" href={that.state.book.url}>Read</a>
+							  	<ul className="book-attrs">
+									<li>{that.state.book.numParts} parts</li>
+									<li>{clrNum(that.state.book.readCount)} reads</li>
+									<li>{clrNum(that.state.book.voteCount)} votes</li>
+									<li>{clrNum(that.state.book.commentCount)} comments</li>
+								</ul>
+							</div>
 						  </section>
-						  <section className="col-1-2">
+						  <section className="book-info">
 						    <article>
 						  	  <h3 className="info-title">Description</h3>
 						  	  <p className="m-content">{that.state.book.description}</p>
-						  	</article>
-						  	 <article>
-						  	  <h3 className="info-title">Tags</h3>
-						  	  <p className="m-content">{that.state.book.tags}</p>
 						  	</article>
 						  </section>
 						</div>

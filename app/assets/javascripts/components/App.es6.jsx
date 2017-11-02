@@ -237,7 +237,6 @@ class App extends React.Component {
 				  searchTerm         = {this.state.searchTerm}
 				  onChangeSearchTerm = {this.changeSearchTerm}
 				  friendlyCat	     = {this.state.friendlyCat}
-
 				 />
 				<BookDisplay
 					onWindowScroll    = {this.handleScroll}
@@ -251,7 +250,7 @@ class App extends React.Component {
 					findById  		  = {this.findById}
 				 />
 				 <SiteFooter 
-				 	library 		 = {this.state.books}			 
+				 	library 		 = {this.state.books}
 				 	droppedBook 	 = {this.state.droppedBook}
 				 	userLibrary		 = {this.state.userLibrary}
  				 />
